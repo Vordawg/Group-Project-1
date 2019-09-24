@@ -4,10 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <title>Hi everybody</title>
 </head>
 <body>
-    <h1> lets get schwifty</h1>
+    <h1> lets get schwifty </h1>
+
+    <script src="assets/js/api1.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        // GHS each chosen miner runs at
+        var ghs = 12930;
+        // kWh each miner consumes per hour
+        var kwhPerHourMiner = 1.375;
+
+        var zipCode = '06905';
+        // Calculates the kWhPerBitcoin based on the ghs & kwh Per Hour
+        var costPerBitcoin = calculate(ghs, kwhPerHourMiner, zipCode);
+
+    </script>
     
 </body>
 </html>
