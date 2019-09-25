@@ -14,12 +14,13 @@
     width: 960px;
 }
 
-#slide1 {
+#parallax1 {
     background: url('../images/bitcoin-start.jpg') 50% 0 no-repeat fixed;
     color: #fff;
-    
     margin: 0;
     padding: 502px 0 260px 0;
     background-size: cover;
 }
+
+
 
