@@ -1,0 +1,26 @@
+#title {
+    text-align: center;
+    padding: -10 0 0 0;
+}
+
+#nav {
+    margin-top: 25px;
+    position: fixed;
+    height: 70px;
+}
+
+#content {
+    margin: 0 auto;
+    width: 960px;
+}
+
+#parallax1 {
+    background: url('../images/bitcoin-start.jpg') 50% 0 no-repeat fixed;
+    color: #fff;
+    margin: 0;
+    padding: 502px 0 260px 0;
+    background-size: cover;
+}
+
+
+
