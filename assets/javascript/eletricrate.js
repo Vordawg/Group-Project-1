@@ -1,5 +1,3 @@
-var eletricRate = 0;
-
 function getEletricRate() {
 
     var street = $("#street").val();
@@ -11,6 +9,8 @@ function getEletricRate() {
 
     var queryURL = "https://developer.nrel.gov/api/census_rate/v3.json?api_key=WqBuSzoSbgbnKIqWHqwRteyGXs7hLFf4jBz54Luk&address=" + addressString;
 
+    var eletricRate = 0;
+
     $.ajax({
         url: queryURL,
         method: "GET"
@@ -21,3 +21,4 @@ function getEletricRate() {
 
     return eletricRate;
 }
+
