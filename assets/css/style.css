@@ -3,6 +3,10 @@
     padding: -10 0 0 0;
 }
 
+#titletext {
+    color: #ffd740;
+}
+
 #nav {
     margin-top: 25px;
     position: fixed;
@@ -15,12 +19,28 @@
 }
 
 #parallax1 {
-    background: url('../images/bitcoin-start.jpg') 50% 0 no-repeat fixed;
+    background: url('../images/bitcoin-gif2.gif') 50% 25% no-repeat;
     color: #fff;
-    margin: 0;
+    margin-top: 30px;
     padding: 502px 0 260px 0;
-    background-size: cover;
+  
 }
 
+#parallax2 {
+    background: url('../images/bitcoin-web.jpg') fixed;
+    color: #fff;
+    background-size: cover;
+    background-position-y: -160px;
+ 
+}
 
+#submitButton {
+    margin-left: 455px;
+    color: black;
 
+}
+
+.form-style {
+    font-size: 15px;
+    font-weight: 250px;
+}
