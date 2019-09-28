@@ -11,7 +11,8 @@
 }
 
 .header {
-    font-family: 'Rubik', sans-serif;}
+    font-family: 'Rubik', sans-serif;
+}
 
 #nav {
     margin-top: 20px;
@@ -35,7 +36,8 @@
     background: url('../images/bitcoin-web.jpg') fixed;
     color: #fff;
     background-size: contain;
-    background-position-y: -160px;
+    background-position-y: -100px;
+    background-position-x: 100px;
     margin-bottom: 150px;
 }
 
@@ -50,28 +52,42 @@
     font-weight: 250px;
 }
 
-@media screen and (max-width: 820px) 
-{
+@media screen and (max-width: 820px) {
+    #parallax2 {
+        background-size: cover;
+        background-repeat: repeat;
+        background-position: center;
+    }
     #title {
         font-size: 25px;
-        }
-    .nav-wrapper{
-        padding-top: 5px;
-        }
     }
+    .nav-wrapper {
+        padding-top: 5px;
+    }
+}
+
 @media screen and (max-width: 600px) {
     #parallax1 {
         background-size: contain
     }
-    
     #parallax2 {
-        background-size: contain;
+        background-size: cover;
         background-repeat: repeat;
+        background-position: center;
     }
     #title {
         font-size: 22px;
     }
-    .nav-wrapper{
+    .nav-wrapper {
         padding-top: 5px;
     }
+}
+
+@media screen and (max-width: 500px) {
+    #parallax1 {
+        background-size: contain;
     }
+    #parallax2 {
+        background-position: center;
+    }
+}
