@@ -85,7 +85,7 @@ function getHashRate() {
             console.log("Hashrate: " + result);
 
             //Terahash per day conversion
-            hashRate = result * 60 * 60 * 24;
+            hashRate = result * 60 * 60 * 24 / 1000;
             console.log("Terahashes per day of BTC network: " + hashRate);
             getBlocksPerDay();
         }
@@ -95,8 +95,8 @@ function getHashRate() {
 //This number would be more accurate with an API call for the block height and using moment.js to calculate the difference over 24 hours, but we can use this as a working estimate (1 block every 10 minutes)
 function getBlocksPerDay() {
 
-
-    var milliSeconds = Date.now() - 86400000; console.log("Milliseconds: " + milliSeconds);
+    var milliSeconds = Date.now() - 86400000;
+    console.log("Milliseconds: " + milliSeconds);
 
     var queryURL = "https://blockchain.info/blocks/" + milliSeconds + "?format=json&cors=true";
     blocksPerDay = 0;
