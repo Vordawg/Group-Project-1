@@ -1,8 +1,48 @@
-
-var hashRate = 0;
 var bitcoinMiner = [];
 
-// Eletric Ratefunction to get the local eletric rate
+// Postal Address function to get the local postal address
+function getPostalAddress() {
+    event.preventDefault();
+
+    var street = $("#street").val().trim();
+    var city = $("#city").val().trim();
+    var state = $("#state").val().trim();
+    var zipCode = $("#zipcode").val().trim();
+
+    var queryURL = "https://cors-anywhere.herokuapp.com/https://www.yaddress.net/api/Address?AddressLine1=" + encodeURIComponent(street);
+    queryURL += "&AddressLine2=" + encodeURIComponent(city + " " + state + " " + zipCode);
+    queryURL += "&UserKey";
+
+    $.ajax({
+        url: queryURL,
+        method: "GET",
+        headers: { "Access-Control-Allow-Origin": "*" }
+    }).then(function (response) {
+        if (response.ErrorCode == 0) {
+            // Address is correct.
+            street = response.AddressLine1;
+            $("#street").text(street);
+
+            city = response.City;
+            $("#city").text(city);
+
+            state = response.State;
+            $("#state").text(state);
+
+            zipCode = response.Zip;
+            $("#zipcode").text(zipCode);
+
+            //Proceed to the calculations.
+            setupMiners();
+        }
+        else {
+            // Address is incorrect
+
+        }
+    });
+}
+
+// Eletric Rate function to get the local eletric rate
 function getEletricRate() {
 
     var street = $("#street").val();
@@ -30,6 +70,8 @@ function getEletricRate() {
 // Terahashes function to get the terahashes rate.
 function getHashRate() {
 
+    var hashRate = 0;
+
     // Opens a AJAX Query to block chain to get the current hash rate.
     $.ajax({
         // Block Chain Link
@@ -40,7 +82,7 @@ function getHashRate() {
 
             //Terahash per day conversion
             hashRate = result * 60 * 60 * 24;
-            console.log("Terahashes per day of BTC network: " + hashrate);
+            console.log("Terahashes per day of BTC network: " + hashRate);
         }
     });
     return hashRate;
@@ -57,7 +99,7 @@ function getBlocksPerDay() {
 
     var milliSeconds = convertedDate.milliseconds() + 1000 * (convertedDate.seconds() + 60 * (convertedDate.minutes() + 60 * convertedDate.hours()));
 
-    console.log(milliSeconds);
+    console.log("Milliseconds: " + milliSeconds);
 
     var queryURL = "https://blockchain.info/blocks/" + milliSeconds + "?format=json&cors=true";
     var blocksPerDay = 0;
@@ -68,6 +110,7 @@ function getBlocksPerDay() {
     }).then(function (response) {
 
         blocksPerDay = response.blocks.length;
+        console.log("Block per day: " + blocksPerDay);
     });
 
     return blocksPerDay;
@@ -87,6 +130,8 @@ function averageMiningHash() {
     var hashrate = getHashRate();
     var bitcoinPerDay = bitCoinPerDay();
     var terahashPerBTC = hashrate / bitcoinPerDay;
+
+    console.log("Terahash per Bitcoin" + terahashPerBTC);
 
     return terahashPerBTC;
 }
@@ -165,7 +210,7 @@ function stageMiners(model, teraHashPerSecond, kWhPerHour, eletricRate, terahash
 }
 
 function setupMiners() {
-    // Call APIs once for the miners
+    // Call APIs once for all the miners
     var eletricRate = getEletricRate();
     var terahashPerBTC = averageMiningHash();
 
@@ -175,4 +220,4 @@ function setupMiners() {
     stageMiners("Antminer t17", 40, 52.8, eletricRate, terahashPerBTC);
 }
 
-
+$("#submitButton").on("click", getPostalAddress);
