@@ -42,7 +42,7 @@
 }
 
 #submitButton {
-    margin-left: 455px;
+    /* margin-left: 455px; */
     color: black;
     border-radius: 50%;
 }
@@ -53,6 +53,9 @@
 }
 
 @media screen and (max-width: 820px) {
+    #parallax1 {
+        background-size: contain
+    }
     #parallax2 {
         background-size: cover;
         background-repeat: repeat;

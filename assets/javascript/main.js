@@ -1,3 +1,4 @@
+
 var bitcoinMiner = [];
 var eletricRate;
 var hashRate;
@@ -206,7 +207,9 @@ function stageMiners(model, teraHashPerSecond, kWhPerHour, eletricRate, terahash
 
     //here we calculate the cost to run the miner for 1 hour
     var miningCostPerHour = kWhPerHour * eletricRate;
+
     console.log('cost per hour to run miner $' + miningCostPerHour);
+
     minerStagingArea.metMiningCostPerHour(miningCostPerHour);
 
     // here we calculate how many hours of mining it would take with 1 miner given the miners wattage
@@ -217,7 +220,9 @@ function stageMiners(model, teraHashPerSecond, kWhPerHour, eletricRate, terahash
 
     // this is the total cost to mine 1BTC at the given moment with 1 miner
     var costBTC = howManyHours * eletricRate
+
     console.log('it will cost ' + costBTC + ' dollars to mine 1 bitcoin');
+
     minerStagingArea.setBitcoinCost(costBTC);
 
     bitcoinMiner.push(minerStagingArea);
