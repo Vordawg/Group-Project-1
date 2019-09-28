@@ -64,7 +64,7 @@ function getEletricRate() {
         method: "GET"
     }).then(function (response) {
 
-        eletricRate = response.outputs.residential;
+        eletricRate = response.outputs.residential / 100;
         console.log("Eletric Rate: " + eletricRate);
 
         getHashRate();
@@ -99,7 +99,7 @@ function getBlocksPerDay() {
     var milliSeconds = Date.now() - 86400000; console.log("Milliseconds: " + milliSeconds);
 
     var queryURL = "https://blockchain.info/blocks/" + milliSeconds + "?format=json&cors=true";
-    var blocksPerDay = 0;
+    blocksPerDay = 0;
 
     $.ajax({
         url: queryURL,
@@ -107,7 +107,7 @@ function getBlocksPerDay() {
     }).then(function (response) {
 
         blocksPerDay = response.blocks.length;
-        console.log("Block per day: " + blocksPerDay);
+        console.log("Blocks per day: " + blocksPerDay);
 
         setupMiners();
     });
@@ -115,7 +115,6 @@ function getBlocksPerDay() {
 
 // BitCoin mined per day
 function bitCoinPerDay() {
-    var blocksPerDay = getBlocksPerDay();
     var bitcoinPerDay = blocksPerDay * 12.5;
     console.log("BitCoin per day: " + bitcoinPerDay);
 
@@ -125,7 +124,7 @@ function bitCoinPerDay() {
 //we take hashes per day and divide that by bitcoin per day. This gives us the average amount of hashes to mine 1 BitCoin
 function averageMiningHash() {
     var bitcoinPerDay = bitCoinPerDay();
-    var terahashPerBTC = hashrate / bitcoinPerDay;
+    var terahashPerBTC = hashRate / bitcoinPerDay;
 
     console.log("Terahash per Bitcoin" + terahashPerBTC);
 
@@ -208,17 +207,19 @@ function stageMiners(model, teraHashPerSecond, kWhPerHour, eletricRate, terahash
 
     //here we calculate the cost to run the miner for 1 hour
     var miningCostPerHour = kWhPerHour * eletricRate;
-    console.log('cost per hour to run miner $ ' + miningCostPerHour);
+    miningCostPerHour = miningCostPerHour.toFixed(2);
+    console.log('cost per hour to run miner $' + miningCostPerHour);
     minerStagingArea.metMiningCostPerHour(miningCostPerHour);
 
     // here we calculate how many hours of mining it would take with 1 miner given the miners wattage
     var howManyHours = terahashPerBTC / minerTerahashPerHour;
-    console.log('it will take about ' + howManyHours + 'hours to mine 1 BTC');
+    console.log('it will take about ' + howManyHours + ' hours to mine 1 bitcoin');
     minerStagingArea.setMiningHours(howManyHours);
 
     // this is the total cost to mine 1BTC at the given moment with 1 miner
     var costBTC = howManyHours * eletricRate
-    console.log('it will cost ' + costBTC + ' dollars to mine 1 BTC');
+    costBTC = costBTC.toFixed(2);
+    console.log('it will cost ' + costBTC + ' dollars to mine 1 bitcoin');
     minerStagingArea.setBitcoinCost(costBTC);
 
     bitcoinMiner.push(minerStagingArea);
