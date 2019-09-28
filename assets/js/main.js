@@ -4,18 +4,19 @@ var bitcoinMiner = [];
 function getPostalAddress() {
     event.preventDefault();
 
-    var street = $("#street").val();
-    var city = $("#city").val();
-    var state = $("#state").val();
-    var zipCode = $("#zipcode").val();
+    var street = $("#street").val().trim();
+    var city = $("#city").val().trim();
+    var state = $("#state").val().trim();
+    var zipCode = $("#zipcode").val().trim();
 
-    var queryURL = "https://www.yaddress.net/api/address?AddressLine1=" + encodeURIComponent(street.trim());
-    queryURL += "&AddressLine2=" + encodeURIComponent(city.trim() + " " + state.trim() + " " + zipCode.trim());
-    queryURL += "&cors=true";
+    var queryURL = "https://cors-anywhere.herokuapp.com/https://www.yaddress.net/api/Address?AddressLine1=" + encodeURIComponent(street);
+    queryURL += "&AddressLine2=" + encodeURIComponent(city + " " + state + " " + zipCode);
+    queryURL += "&UserKey";
 
     $.ajax({
         url: queryURL,
-        method: "GET"
+        method: "GET",
+        headers: { "Access-Control-Allow-Origin": "*" }
     }).then(function (response) {
         if (response.ErrorCode == 0) {
             // Address is correct.
