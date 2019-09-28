@@ -2,33 +2,42 @@ var bitcoinMiner = [];
 
 // Postal Address function to get the local postal address
 function getPostalAddress() {
+    event.preventDefault();
+
     var street = $("#street").val();
     var city = $("#city").val();
     var state = $("#state").val();
     var zipCode = $("#zipcode").val();
 
-    var queryURL = "https://www.yaddress.net/api/address?AddressLine1=" + encodeURIComponent(street);
-    queryURL += "&AddressLine2=" + encodeURIComponent(city + " " + state + " " + zipCode);
+    var queryURL = "https://www.yaddress.net/api/address?AddressLine1=" + encodeURIComponent(street.trim());
+    queryURL += "&AddressLine2=" + encodeURIComponent(city.trim() + " " + state.trim() + " " + zipCode.trim());
     queryURL += "&cors=true";
 
     $.ajax({
         url: queryURL,
         method: "GET"
     }).then(function (response) {
+        if (response.ErrorCode == 0) {
+            // Address is correct.
+            street = response.AddressLine1;
+            $("#street").text(street);
 
-        street = response.AddressLine1;
-        $("#street").text(street);
+            city = response.City;
+            $("#city").text(city);
 
-        city = response.City;
-        $("#city").text(city);
+            state = response.State;
+            $("#state").text(state);
 
-        state = response.State;
-        $("#state").text(state);
+            zipCode = response.Zip;
+            $("#zipcode").text(zipCode);
 
-        zipCode = response.Zip;
-        $("#zipcode").text(zipCode);
+            //Proceed to the calculations.
+            setupMiners();
+        }
+        else {
+            // Address is incorrect
 
-        setupMiners();
+        }
     });
 }
 
