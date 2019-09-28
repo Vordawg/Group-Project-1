@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 
 <head>
@@ -20,20 +20,15 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col s12">
-                <nav class="z-depth-4" id="nav">
-                    <div class="nav-wrapper #000000 black lighten-1 ">
-                        <a href="#" class="valign center-block grey-text text-lighten-2" id="title"><span
-                                id="titletext">Bitcoin
-                                Cost
-                                Estimator</span></a>
-                    </div>
-                </nav>
-            </div>
-        </div>
 
+    <nav class="z-depth-4" id="nav">
+        <div class="nav-wrapper #000000 black lighten-1 ">
+            <a href="#" class="valign center-block grey-text text-lighten-2" id="title"><span id="titletext">Bitcoin
+                    Cost Estimator</span>
+            </a>
+        </div>
+    </nav>
+    <div class="row">
         <div class="parallax-container">
             <div class="parallax" materialize="parallax" id="parallax1"></div>
         </div>
@@ -42,62 +37,69 @@
                 <h2 class="header">What is this?</h2>
                 <span id="content"> This program uses the cost of electricity in your region, along with the mining
                     difficulty of the bitcoin network,
-                    to calculate an estimate of the electrical cost to mine 1 Bitcoin. We display the results amongst a
+                    to calculate an estimate of the electrical cost to mine 1 Bitcoin. We display the results
+                    amongst a
                     selection of some of the top
-                    bitcoin miners on the market, to see how each model stacks up. Our calculations are calibrated to
+                    bitcoin miners on the market, to see how each model stacks up. Our calculations are calibrated
+                    to
                     miners running on their normal
                     power mode, not on their overclocked, or on power saving modes.
                 </span>
             </div>
         </div>
     </div>
-    <div class="parallax-container">
-        <div class="parallax" materialize="parallax" id="parallax2"></div>
-    </div>
+    <div class="row">
+        <div class="parallax-container">
+            <div class="parallax" materialize="parallax" id="parallax2"></div>
+        </div>
 
-    <div class="section white">
-        <div class="row container">
-            <h4>
-                <div id="errorMessage" class="deep-orange-text text-accent-3"></div>
-            </h4>
-            <h3 class="header">Enter your location</h3>
-            <form>
-                <div class="form-style">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="street" aria-describedby="streethelp">Street
-                        </input>
-                        <small id="streethelp" class="form-text text-muted">Ex. 210 Capitol Ave</small></p>
-                    </div>
+        <div class="section white">
+            <div class="row container">
+                <h4>
+                    <div id="errorMessage" class="deep-orange-text text-accent-3"></div>
+                </h4>
+                <h3 class="header">Enter your location</h3>
+                <form>
+                    <div class="form-style">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="street" aria-describedby="streethelp">Street
+                            </input>
+                            <small id="streethelp" class="form-text text-muted">Ex. 210 Capitol Ave</small></p>
+                        </div>
 
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="city" aria-describedby="cityhelp">City
-                        </input>
-                        <small id="cityhelp" class="form-text text-muted">Ex. Washington</small></p>
-                    </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="city" aria-describedby="cityhelp">City
+                            </input>
+                            <small id="cityhelp" class="form-text text-muted">Ex. Washington</small></p>
+                        </div>
 
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="state" aria-describedby="statehelp">State
-                        </input>
-                        <small id="statehelp" class="form-text text-muted">Ex. District of Columbia</small></p>
-                    </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="state" aria-describedby="statehelp">State
+                            </input>
+                            <small id="statehelp" class="form-text text-muted">Ex. District of Columbia</small></p>
+                        </div>
 
-                    <div class="form-group">
-                        <input id="zipcode" aria-describedby="help">Zip Code</input></p>
-                    </div>
+                        <div class="form-group">
+                            <input id="zipcode" aria-describedby="help">Zip Code</input></p>
+                        </div>
 
-                    <br>
-                    <div class="center-align">
-                        <button type="submit" class="waves-effect waves-light btn-large #ffc400 amber accent-3"
-                            id="submitButton">Submit <i class="material-icons right">send</i></button>
+                        <br>
+                        <div class="center-align">
+                            <button type="submit" class="waves-effect waves-light btn-large #ffc400 amber accent-3"
+                                id="submitButton">Submit <i class="material-icons right">send</i></button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+
     <script src="assets/javascript/main.js" type="text/javascript"></script>
 
+    <canvas id="bar-chart" width="800" height="450"></canvas>
 
 </body>
 
