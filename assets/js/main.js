@@ -216,4 +216,4 @@ function setupMiners() {
     stageMiners("Antminer t17", 40, 52.8, eletricRate, terahashPerBTC);
 }
 
-$("#submit").on("click", getPostalAddress);
+$("#submitButton").on("click", getPostalAddress);
