@@ -86,6 +86,7 @@ function getHashRate() {
 
             // Conver the gigahash to terahash by dividing by 1000
             hashRate = (result / 1000) * 60 * 60 * 24;
+
             console.log("Terahashes per day of BTC network: " + hashRate);
             getBlocksPerDay();
         }
@@ -95,8 +96,8 @@ function getHashRate() {
 //This number would be more accurate with an API call for the block height and using moment.js to calculate the difference over 24 hours, but we can use this as a working estimate (1 block every 10 minutes)
 function getBlocksPerDay() {
 
-
-    var milliSeconds = Date.now() - 86400000; console.log("Milliseconds: " + milliSeconds);
+    var milliSeconds = Date.now() - 86400000;
+    console.log("Milliseconds: " + milliSeconds);
 
     var queryURL = "https://blockchain.info/blocks/" + milliSeconds + "?format=json&cors=true";
     blocksPerDay = 0;
@@ -208,6 +209,7 @@ function stageMiners(model, teraHashPerSecond, kWhPerHour, eletricRate, terahash
     //here we calculate the cost to run the miner for 1 hour
     var miningCostPerHour = kWhPerHour * eletricRate;
 
+    miningCostPerHour = miningCostPerHour.toFixed(2);
     console.log('cost per hour to run miner $' + miningCostPerHour);
 
     minerStagingArea.metMiningCostPerHour(miningCostPerHour);
@@ -221,6 +223,7 @@ function stageMiners(model, teraHashPerSecond, kWhPerHour, eletricRate, terahash
     // this is the total cost to mine 1BTC at the given moment with 1 miner
     var costBTC = howManyHours * eletricRate
 
+    costBTC = costBTC.toFixed(2);
     console.log('it will cost ' + costBTC + ' dollars to mine 1 bitcoin');
 
     minerStagingArea.setBitcoinCost(costBTC);
