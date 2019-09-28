@@ -64,7 +64,7 @@ function getEletricRate() {
         method: "GET"
     }).then(function (response) {
 
-        eletricRate = response.outputs.residential;
+        eletricRate = response.outputs.residential / 100;
         console.log("Eletric Rate: " + eletricRate);
 
         getHashRate();
@@ -84,8 +84,8 @@ function getHashRate() {
             //the API returns terahash per second, but we need terahashes per day at the given hash rate.
             console.log("Hashrate: " + result);
 
-            //Terahash per day conversion
-            hashRate = result * 60 * 60 * 24;
+            // Conver the gigahash to terahash by dividing by 1000
+            hashRate = (result / 1000) * 60 * 60 * 24;
             console.log("Terahashes per day of BTC network: " + hashRate);
             getBlocksPerDay();
         }
@@ -99,7 +99,7 @@ function getBlocksPerDay() {
     var milliSeconds = Date.now() - 86400000; console.log("Milliseconds: " + milliSeconds);
 
     var queryURL = "https://blockchain.info/blocks/" + milliSeconds + "?format=json&cors=true";
-    var blocksPerDay = 0;
+    blocksPerDay = 0;
 
     $.ajax({
         url: queryURL,
@@ -107,7 +107,7 @@ function getBlocksPerDay() {
     }).then(function (response) {
 
         blocksPerDay = response.blocks.length;
-        console.log("Block per day: " + blocksPerDay);
+        console.log("Blocks per day: " + blocksPerDay);
 
         setupMiners();
     });
@@ -115,7 +115,6 @@ function getBlocksPerDay() {
 
 // BitCoin mined per day
 function bitCoinPerDay() {
-    var blocksPerDay = getBlocksPerDay();
     var bitcoinPerDay = blocksPerDay * 12.5;
     console.log("BitCoin per day: " + bitcoinPerDay);
 
@@ -125,9 +124,9 @@ function bitCoinPerDay() {
 //we take hashes per day and divide that by bitcoin per day. This gives us the average amount of hashes to mine 1 BitCoin
 function averageMiningHash() {
     var bitcoinPerDay = bitCoinPerDay();
-    var terahashPerBTC = hashrate / bitcoinPerDay;
+    var terahashPerBTC = hashRate / bitcoinPerDay;
 
-    console.log("Terahash per Bitcoin" + terahashPerBTC);
+    console.log("Terahash per Bitcoin: " + terahashPerBTC);
 
     return terahashPerBTC;
 }
@@ -208,17 +207,22 @@ function stageMiners(model, teraHashPerSecond, kWhPerHour, eletricRate, terahash
 
     //here we calculate the cost to run the miner for 1 hour
     var miningCostPerHour = kWhPerHour * eletricRate;
-    console.log('cost per hour to run miner $ ' + miningCostPerHour);
+
+    console.log('cost per hour to run miner $' + miningCostPerHour);
+
     minerStagingArea.metMiningCostPerHour(miningCostPerHour);
 
     // here we calculate how many hours of mining it would take with 1 miner given the miners wattage
+
     var howManyHours = terahashPerBTC / minerTerahashPerHour;
-    console.log('it will take about ' + howManyHours + 'hours to mine 1 BTC');
+    console.log('it will take about ' + howManyHours + ' hours to mine 1 bitcoin');
     minerStagingArea.setMiningHours(howManyHours);
 
     // this is the total cost to mine 1BTC at the given moment with 1 miner
     var costBTC = howManyHours * eletricRate
-    console.log('it will cost ' + costBTC + ' dollars to mine 1 BTC');
+
+    console.log('it will cost ' + costBTC + ' dollars to mine 1 bitcoin');
+
     minerStagingArea.setBitcoinCost(costBTC);
 
     bitcoinMiner.push(minerStagingArea);
@@ -231,6 +235,36 @@ function setupMiners() {
     stageMiners("AntMiner S9", 16, 33, eletricRate, terahashPerBTC);
     stageMiners("DragonMiner", 16, 38.4, eletricRate, terahashPerBTC);
     stageMiners("Antminer t17", 40, 52.8, eletricRate, terahashPerBTC);
+
+    var cost1 = bitcoinMiner[0].bitcoinCost;
+    var cost2 = bitcoinMiner[1].bitcoinCost;
+    var cost3 = bitcoinMiner[2].bitcoinCost;
+
+    cost1 = cost1.toFixed(2);
+    cost2 = cost2.toFixed(2);
+    cost3 = cost3.toFixed(2);
+
+    new Chart(document.getElementById("bar-chart"), {
+        type: 'bar',
+        data: {
+          labels: [bitcoinMiner[0].model, bitcoinMiner[1].model, bitcoinMiner[2].model],
+          datasets: [
+            {
+              label: "Cost (USD)",
+              backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
+              data: [cost1, cost2, cost3]
+            }
+          ]
+        },
+        options: {
+          legend: { display: false },
+          title: {
+            display: true,
+            text: 'Estimated Cost Per Bitcoin (USD)'
+          }
+        }
+    });
+
 }
 
 $("#submitButton").on("click", getPostalAddress);
