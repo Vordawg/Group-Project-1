@@ -8,49 +8,66 @@ var blocksPerDay;
 function getPostalAddress() {
     event.preventDefault();
 
-    var street = $("#streethelp").val().trim();
-    var city = $("#cityhelp").val().trim();
-    var state = $("#statehelp").val().trim();
+    // Clear any error message.
+    $("#errorMessage").empty();
+
+    var street = $("#street").val().trim();
+    var city = $("#city").val().trim();
+    var state = $("#state").val().trim();
     var zipCode = $("#zipcode").val().trim();
 
-    var queryURL = "https://cors-anywhere.herokuapp.com/https://www.yaddress.net/api/Address?AddressLine1=" + encodeURIComponent(street);
-    queryURL += "&AddressLine2=" + encodeURIComponent(city + " " + state + " " + zipCode);
-    queryURL += "&UserKey";
-    $.ajax({
-        url: queryURL,
-        method: "GET",
-        headers: { "Access-Control-Allow-Origin": "*" }
-    }).then(function (response) {
-        if (response.ErrorCode == 0) {
-            // Address is correct.
-            street = response.AddressLine1;
-            $("#streethelp").text(street);
+    // Make sure all the input fields are filled out.
+    if (street.length == 0 || city.length == 0 || state.length == 0 || zipCode == 0) {
+        var errorMessage;
+        errorMessage = "Please enter a full address.";
+        $("#errorMessage").text(errorMessage);
+    }
+    else {
+        var queryURL = "https://cors-anywhere.herokuapp.com/https://www.yaddress.net/api/Address?AddressLine1=" + encodeURIComponent(street);
+        queryURL += "&AddressLine2=" + encodeURIComponent(city + " " + state + " " + zipCode);
+        queryURL += "&UserKey";
+        $.ajax({
+            url: queryURL,
+            method: "GET",
+            headers: { "Access-Control-Allow-Origin": "*" }
+        }).then(function (response) {
+            if (response.ErrorCode == 0) {
+                // Address is correct.
+                street = response.AddressLine1;
+                $("#street").val(street);
 
-            city = response.City;
-            $("#cityhelp").text(city);
+                city = response.City;
+                $("#city").val(city);
 
-            state = response.State;
-            $("#statehelp").text(state);
+                state = response.State;
+                $("#state").val(state);
 
-            zipCode = response.Zip;
-            $("#zipcode").text(zipCode);
+                zipCode = response.Zip;
+                $("#zipcode").val(zipCode);
 
-            //Proceed to the eletric rate.
-            getEletricRate();
-        }
-        else {
-            // Address is incorrect
-
-        }
-    });
+                //Proceed to the eletric rate.
+                getEletricRate();
+            }
+            else {
+                // Address is incorrect
+                var errorMessage;
+                errorMessage = "Please enter a correct address.";
+                // Add extra error message handling.
+                if (response.ErrorCode == 2 || response.ErrorCode == 3 || response.ErrorCode == 4 || response.ErrorCode == 5 || response.ErrorCode == 8) {
+                    errorMessage += " " + response.ErrorMessage + ".";
+                }
+                $("#errorMessage").text(errorMessage);
+            }
+        });
+    }
 }
 
 // Eletric Rate function to get the local eletric rate
 function getEletricRate() {
 
-    var street = $("#streethelp").val();
-    var city = $("#cityhelp").val();
-    var state = $("#statehelp").val();
+    var street = $("#street").val();
+    var city = $("#city").val();
+    var state = $("#state").val();
     var zipCode = $("#zipcode").val();
 
     var addressString = encodeURIComponent(street + " " + city + " " + state + " " + zipCode);
@@ -243,28 +260,24 @@ function setupMiners() {
     var cost2 = bitcoinMiner[1].bitcoinCost;
     var cost3 = bitcoinMiner[2].bitcoinCost;
 
-    cost1 = cost1.toFixed(2);
-    cost2 = cost2.toFixed(2);
-    cost3 = cost3.toFixed(2);
-
     new Chart(document.getElementById("bar-chart"), {
         type: 'bar',
         data: {
-          labels: [bitcoinMiner[0].model, bitcoinMiner[1].model, bitcoinMiner[2].model],
-          datasets: [
-            {
-              label: "Cost (USD)",
-              backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
-              data: [cost1, cost2, cost3]
-            }
-          ]
+            labels: [bitcoinMiner[0].model, bitcoinMiner[1].model, bitcoinMiner[2].model],
+            datasets: [
+                {
+                    label: "Cost (USD)",
+                    backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
+                    data: [cost1, cost2, cost3]
+                }
+            ]
         },
         options: {
-          legend: { display: false },
-          title: {
-            display: true,
-            text: 'Estimated Cost Per Bitcoin (USD)'
-          }
+            legend: { display: false },
+            title: {
+                display: true,
+                text: 'Estimated Cost Per Bitcoin (USD)'
+            }
         }
     });
 
