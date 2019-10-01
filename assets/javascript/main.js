@@ -252,23 +252,34 @@ function setupMiners() {
     var terahashPerBTC = averageMiningHash();
 
     // Add miners
-    stageMiners("AntMiner S9", 16, 33, eletricRate, terahashPerBTC);
+
+    stageMiners("AntMiner S9k-14TH/s", 14, 28.56, eletricRate, terahashPerBTC);
+    stageMiners("Antminer S9j-14TH/s", 14, 31.536, eletricRate, terahashPerBTC);
     stageMiners("DragonMiner", 16, 38.4, eletricRate, terahashPerBTC);
-    stageMiners("Antminer t17", 40, 52.8, eletricRate, terahashPerBTC);
+    stageMiners("AntMiner S9e-16TH/s", 16, 30.72, eletricRate, terahashPerBTC);
+    stageMiners("Antminer T17-40TH/s", 40, 50.16, eletricRate, terahashPerBTC);
+    stageMiners("Antminer S17-53TH/s", 53, 57.24, eletricRate, terahashPerBTC);
+
+
+
+
 
     var cost1 = bitcoinMiner[0].bitcoinCost;
     var cost2 = bitcoinMiner[1].bitcoinCost;
     var cost3 = bitcoinMiner[2].bitcoinCost;
+    var cost4 = bitcoinMiner[3].bitcoinCost;
+    var cost5 = bitcoinMiner[4].bitcoinCost;
+    var cost6 = bitcoinMiner[5].bitcoinCost;
 
     new Chart(document.getElementById("bar-chart"), {
         type: 'bar',
         data: {
-            labels: [bitcoinMiner[0].model, bitcoinMiner[1].model, bitcoinMiner[2].model],
+            labels: [bitcoinMiner[0].model, bitcoinMiner[1].model, bitcoinMiner[2].model, bitcoinMiner[3].model, bitcoinMiner[4].model, bitcoinMiner[5].model, ],
             datasets: [
                 {
                     label: "Cost (USD)",
-                    backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
-                    data: [cost1, cost2, cost3]
+                    backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#563D7C", "#E34C26", "#F1E05A"],
+                    data: [cost1, cost2, cost3, cost4, cost5, cost6]
                 }
             ]
         },
