@@ -149,25 +149,6 @@ function averageMiningHash() {
     return terahashPerBTC;
 }
 
-function getHashesToWin() {
-
-    var hashesToWin = 0;
-
-    // Opens a AJAX Query to block chain to get the current hashes to win.
-    $.ajax({
-        // Block Chain Link
-        url: "https://blockchain.info/q/hashestowin", success: function (result) {
-
-            //the API returns terahash per second, but we need terahashes per day at the given hash rate.
-            console.log("Hashes to win: " + result);
-
-            //Terahash per day conversion
-            hashesToWin = result;
-        }
-    });
-    return hashesToWin;
-}
-
 function stageMiners(model, teraHashPerSecond, kWhPerHour, eletricRate, terahashPerBTC) {
 
     var minerStagingArea = {
@@ -255,16 +236,16 @@ function setupMiners() {
 
     stageMiners("AntMiner S9k - 14Th/s - $263", 14, 28.56, eletricRate, terahashPerBTC);
     stageMiners("Antminer S9j - 14Th/s - $276", 14, 31.536, eletricRate, terahashPerBTC);
-    stageMiners("AntMiner S9e - 16Th/s - $430", 16, 30.72, eletricRate, terahashPerBTC);    
-    stageMiners("DragonMint T1 miner - 16Th/s - $495", 16, 38.4, eletricRate, terahashPerBTC); 
+    stageMiners("AntMiner S9e - 16Th/s - $430", 16, 30.72, eletricRate, terahashPerBTC);
+    stageMiners("DragonMint T1 miner - 16Th/s - $495", 16, 38.4, eletricRate, terahashPerBTC);
     stageMiners("Ebit E10.1 - 18Th/s - $550", 18, 38.4, eletricRate, terahashPerBTC);
-    stageMiners("Canaan Avalon 921 - 20Th/S - $599", 20, 43.2, eletricRate, terahashPerBTC); 
+    stageMiners("Canaan Avalon 921 - 20Th/S - $599", 20, 43.2, eletricRate, terahashPerBTC);
     stageMiners("Ebit E10.2 - 27Th/s - $649", 27, 68.04, eletricRate, terahashPerBTC);
     stageMiners("Antminer T17 - 40Th/s - $1,026", 40, 50.16, eletricRate, terahashPerBTC);
     stageMiners("Canaan Avalon 1066 W/PSU - 50Th/s - $1,549", 50, 78, eletricRate, terahashPerBTC);
     stageMiners("Antminer S17 - 53Th/s - $2,107", 53, 57.24, eletricRate, terahashPerBTC);
-   
-    
+
+
 
 
 
@@ -284,12 +265,12 @@ function setupMiners() {
     new Chart(document.getElementById("bar-chart"), {
         type: 'bar',
         data: {
-            labels: [bitcoinMiner[0].model, bitcoinMiner[1].model, bitcoinMiner[2].model, bitcoinMiner[3].model, bitcoinMiner[4].model, bitcoinMiner[5].model, bitcoinMiner[6].model, bitcoinMiner[7].model, bitcoinMiner[8].model, bitcoinMiner[9].model ],
+            labels: [bitcoinMiner[0].model, bitcoinMiner[1].model, bitcoinMiner[2].model, bitcoinMiner[3].model, bitcoinMiner[4].model, bitcoinMiner[5].model, bitcoinMiner[6].model, bitcoinMiner[7].model, bitcoinMiner[8].model, bitcoinMiner[9].model],
             datasets: [
                 {
                     label: "Cost (USD)",
                     backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#E34C26", "#F1E05A", "#563D7C", "#FEFF90", "#FF9090", "#0B0080", "#Be36f5"],
-                    data: [cost1, cost2, cost3, cost4, cost5, cost6, cost7, cost8, cost9, cost10, ]
+                    data: [cost1, cost2, cost3, cost4, cost5, cost6, cost7, cost8, cost9, cost10]
                 }
             ]
         },
