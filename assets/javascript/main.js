@@ -270,7 +270,7 @@ function setupMiners() {
                 {
                     label: "Cost (USD)",
                     backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#E34C26", "#F1E05A", "#563D7C", "#FEFF90", "#FF9090", "#0B0080", "#Be36f5"],
-                    data: [cost1, cost2, cost3, cost4, cost5, cost6, cost7, cost8, cost9, cost10,]
+                    data: [cost1, cost2, cost3, cost4, cost5, cost6, cost7, cost8, cost9, cost10]
                 }
             ]
         },
